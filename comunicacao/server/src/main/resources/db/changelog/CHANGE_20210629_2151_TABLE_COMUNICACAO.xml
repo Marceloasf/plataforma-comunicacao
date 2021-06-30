@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="create-table-comunicacao" author="marcelo.filho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="comunicacao"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="comunicacao">
+            <column name="id" type="numeric(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dataenvio" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destinatario" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mensagem" type="varchar(2000)"/>
+        </createTable>
+        <addPrimaryKey tableName="comunicacao" columnNames="id" constraintName="comunicacao_pk"/>
+    </changeSet>
+</databaseChangeLog>
