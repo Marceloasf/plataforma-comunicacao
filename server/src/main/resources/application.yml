@@ -17,8 +17,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         show_sql: true
   liquibase:
-    change-log: classpath:/db/changelog-master.xml
-    contexts: dev
+    change-log: classpath:/db/master.xml
     parameters:
       schema: comunicacao
 

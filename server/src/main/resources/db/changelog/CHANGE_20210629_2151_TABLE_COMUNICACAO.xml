@@ -28,4 +28,14 @@
         </createTable>
         <addPrimaryKey tableName="comunicacao" columnNames="id" constraintName="comunicacao_pk"/>
     </changeSet>
+
+    <changeSet id="create-comunicacao_sequence" author="marcelo.filho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="comunicacao_sequence"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="comunicacao_sequence" incrementBy="1" startValue="1"/>
+    </changeSet>
 </databaseChangeLog>

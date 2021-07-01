@@ -10,7 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,6 +26,8 @@ import java.time.LocalDateTime;
 public class Comunicacao {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="comunicacao_sequence")
+    @SequenceGenerator(name="comunicacao_sequence", sequenceName="comunicacao_sequence")
     private Long id;
 
     @NotNull

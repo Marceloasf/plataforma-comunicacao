@@ -6,7 +6,12 @@ plugins {
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+compileJava.sourceCompatibility = JavaVersion.VERSION_11
+compileJava.targetCompatibility = JavaVersion.VERSION_11
+
+compileTestJava.sourceCompatibility = JavaVersion.VERSION_11
+compileTestJava.targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
@@ -35,6 +40,3 @@ dependencies {
 	testImplementation 'junit:junit:4.13'
 }
 
-test {
-	useJUnitPlatform()
-}
