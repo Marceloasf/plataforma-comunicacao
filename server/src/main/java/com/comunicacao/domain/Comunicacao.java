@@ -1,9 +1,9 @@
 package com.comunicacao.domain;
 
+import com.comunicacao.enums.StatusComunicacaoEnum;
 import com.comunicacao.enums.TipoComunicacaoEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -26,8 +26,8 @@ import java.time.LocalDateTime;
 public class Comunicacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="comunicacao_sequence")
-    @SequenceGenerator(name="comunicacao_sequence", sequenceName="comunicacao_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comunicacao_sequence")
+    @SequenceGenerator(name = "comunicacao_sequence", sequenceName = "comunicacao_sequence")
     private Long id;
 
     @NotNull
@@ -38,10 +38,15 @@ public class Comunicacao {
     @Length(max = 200)
     private String destinatario;
 
+    @NotBlank
     @Length(max = 2000)
-    private String mensagem = StringUtils.EMPTY;
+    private String mensagem;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private TipoComunicacaoEnum tipo;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusComunicacaoEnum status = StatusComunicacaoEnum.AGENDADA;
 }

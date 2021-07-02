@@ -1,6 +1,8 @@
 package com.comunicacao.service;
 
 import com.comunicacao.domain.Comunicacao;
+import com.comunicacao.enums.StatusComunicacaoEnum;
+import com.comunicacao.exception.RegistroNaoEncontradoException;
 import com.comunicacao.fixtures.ComunicacaoFixtures;
 import com.comunicacao.repository.ComunicacaoRepository;
 import org.junit.Test;
@@ -9,9 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -26,16 +31,60 @@ public class ComunicacaoServiceTest {
     private ComunicacaoService service;
 
     @Test
-    public void findAll() {
+    public void saveComunicacao() {
 
-        List<Comunicacao> list = new ArrayList<>();
-        list.add(new ComunicacaoFixtures().criarComunicacao());
+        Comunicacao novaComunicacao = ComunicacaoFixtures.criarNovaComunicacao();
 
-        when(this.repository.findAll()).thenReturn(list);
+        when(this.repository.save(any(Comunicacao.class))).thenReturn(novaComunicacao);
 
-        this.service.findAll();
+        this.service.saveComunicacao(novaComunicacao);
 
-        verify(this.repository).findAll();
+        verify(this.repository).save(any(Comunicacao.class));
+        verifyNoMoreInteractions(this.repository);
+    }
+
+    @Test
+    public void findStatusByComunicacaoId() {
+
+        Comunicacao comunicacao = ComunicacaoFixtures.criarComunicacao();
+
+        when(this.repository.findById(comunicacao.getId())).thenReturn(Optional.of(comunicacao));
+
+        StatusComunicacaoEnum status = this.service.findStatusByComunicacaoId(comunicacao.getId());
+
+        assertThat(status).isEqualTo(StatusComunicacaoEnum.AGENDADA);
+
+        verify(this.repository).findById(comunicacao.getId());
+        verifyNoMoreInteractions(this.repository);
+    }
+
+    @Test
+    public void findStatusByComunicacaoIdException() {
+
+        Long id = 1L;
+
+        when(this.repository.findById(id)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(RegistroNaoEncontradoException.class, () ->
+                this.service.findStatusByComunicacaoId(id)
+        );
+
+        assertThat(exception.getMessage()).isEqualTo("O registro não foi encontrado.");
+
+        verify(this.repository).findById(id);
+        verifyNoMoreInteractions(this.repository);
+    }
+
+    @Test
+    public void deleteById() {
+
+        Long id = 1L;
+
+        doNothing().when(this.repository).deleteById(id);
+
+        this.service.deleteById(id);
+
+        verify(this.repository).deleteById(id);
         verifyNoMoreInteractions(this.repository);
     }
 }

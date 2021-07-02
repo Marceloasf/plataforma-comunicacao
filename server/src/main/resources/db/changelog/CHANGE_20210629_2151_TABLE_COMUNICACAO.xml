@@ -24,7 +24,12 @@
             <column name="tipo" type="varchar(30)">
                 <constraints nullable="false"/>
             </column>
-            <column name="mensagem" type="varchar(2000)"/>
+            <column name="status" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mensagem" type="varchar(2000)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addPrimaryKey tableName="comunicacao" columnNames="id" constraintName="comunicacao_pk"/>
     </changeSet>

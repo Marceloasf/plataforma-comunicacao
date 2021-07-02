@@ -1,11 +1,11 @@
 package com.comunicacao.service;
 
 import com.comunicacao.domain.Comunicacao;
+import com.comunicacao.enums.StatusComunicacaoEnum;
+import com.comunicacao.exception.RegistroNaoEncontradoException;
 import com.comunicacao.repository.ComunicacaoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -17,9 +17,21 @@ public class ComunicacaoService {
         this.repository = repository;
     }
 
-    @Transactional(readOnly = true)
-    public List<Comunicacao> findAll() {
+    public void saveComunicacao(Comunicacao novaComunicacao) {
 
-        return this.repository.findAll();
+        this.repository.save(novaComunicacao);
+    }
+
+    @Transactional(readOnly = true)
+    public StatusComunicacaoEnum findStatusByComunicacaoId(Long id) {
+
+        Comunicacao comunicacao = this.repository.findById(id).orElseThrow(RegistroNaoEncontradoException::new);
+
+        return comunicacao.getStatus();
+    }
+
+    public void deleteById(Long id) {
+
+        this.repository.deleteById(id);
     }
 }
