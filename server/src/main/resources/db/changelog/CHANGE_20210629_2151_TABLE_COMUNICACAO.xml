@@ -4,6 +4,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <changeSet id="create-comunicacao_sequence" author="marcelo.filho">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="comunicacao_sequence"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="comunicacao_sequence" incrementBy="1" startValue="1"/>
+    </changeSet>
+
     <changeSet id="create-table-comunicacao" author="marcelo.filho">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -32,15 +42,5 @@
             </column>
         </createTable>
         <addPrimaryKey tableName="comunicacao" columnNames="id" constraintName="comunicacao_pk"/>
-    </changeSet>
-
-    <changeSet id="create-comunicacao_sequence" author="marcelo.filho">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <sequenceExists sequenceName="comunicacao_sequence"/>
-            </not>
-        </preConditions>
-
-        <createSequence sequenceName="comunicacao_sequence" incrementBy="1" startValue="1"/>
     </changeSet>
 </databaseChangeLog>

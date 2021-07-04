@@ -27,7 +27,7 @@ public class Comunicacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comunicacao_sequence")
-    @SequenceGenerator(name = "comunicacao_sequence", sequenceName = "comunicacao_sequence")
+    @SequenceGenerator(name = "comunicacao_sequence", sequenceName = "comunicacao_sequence", allocationSize = 1)
     private Long id;
 
     @NotNull

@@ -52,7 +52,7 @@ public class ComunicacaoControllerTest {
         this.mockMvc.perform(post("/api/comunicacoes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(novaComunicacao)))
-                .andExpect(status().isCreated());
+                 .andExpect(status().isCreated());
 
         verify(this.service).saveComunicacao(novaComunicacao);
         verifyNoMoreInteractions(this.service);

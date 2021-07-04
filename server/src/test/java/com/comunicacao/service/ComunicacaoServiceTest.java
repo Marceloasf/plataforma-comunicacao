@@ -5,6 +5,7 @@ import com.comunicacao.enums.StatusComunicacaoEnum;
 import com.comunicacao.exception.RegistroNaoEncontradoException;
 import com.comunicacao.fixtures.ComunicacaoFixtures;
 import com.comunicacao.repository.ComunicacaoRepository;
+import com.comunicacao.validator.ComunicacaoValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,13 +28,47 @@ public class ComunicacaoServiceTest {
     @Mock
     private ComunicacaoRepository repository;
 
+    @Mock
+    private ComunicacaoValidator validator;
+
     @InjectMocks
     private ComunicacaoService service;
+
+
+    @Test
+    public void findById() {
+
+        var comunicacao = ComunicacaoFixtures.criarComunicacao();
+
+        when(this.repository.findById(comunicacao.getId())).thenReturn(Optional.of(comunicacao));
+
+        this.service.findById(comunicacao.getId());
+
+        verify(this.repository).findById(comunicacao.getId());
+        verifyNoMoreInteractions(this.repository);
+    }
+
+    @Test
+    public void findByIdRegistroNaoEncontradoException() {
+
+        Long id = 1L;
+
+        when(this.repository.findById(id)).thenReturn(Optional.empty());
+
+        var exception = assertThrows(RegistroNaoEncontradoException.class, () ->
+                this.service.findById(id)
+        );
+
+        assertThat(exception.getMessage()).isEqualTo("O registro não foi encontrado.");
+
+        verify(this.repository).findById(id);
+        verifyNoMoreInteractions(this.repository);
+    }
 
     @Test
     public void saveComunicacao() {
 
-        Comunicacao novaComunicacao = ComunicacaoFixtures.criarNovaComunicacao();
+        var novaComunicacao = ComunicacaoFixtures.criarNovaComunicacao();
 
         when(this.repository.save(any(Comunicacao.class))).thenReturn(novaComunicacao);
 
@@ -46,11 +81,11 @@ public class ComunicacaoServiceTest {
     @Test
     public void findStatusByComunicacaoId() {
 
-        Comunicacao comunicacao = ComunicacaoFixtures.criarComunicacao();
+        var comunicacao = ComunicacaoFixtures.criarComunicacao();
 
         when(this.repository.findById(comunicacao.getId())).thenReturn(Optional.of(comunicacao));
 
-        StatusComunicacaoEnum status = this.service.findStatusByComunicacaoId(comunicacao.getId());
+        var status = this.service.findStatusByComunicacaoId(comunicacao.getId());
 
         assertThat(status).isEqualTo(StatusComunicacaoEnum.AGENDADA);
 
@@ -65,7 +100,7 @@ public class ComunicacaoServiceTest {
 
         when(this.repository.findById(id)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(RegistroNaoEncontradoException.class, () ->
+        var exception = assertThrows(RegistroNaoEncontradoException.class, () ->
                 this.service.findStatusByComunicacaoId(id)
         );
 
@@ -78,13 +113,15 @@ public class ComunicacaoServiceTest {
     @Test
     public void deleteById() {
 
-        Long id = 1L;
+        var comunicacao = ComunicacaoFixtures.criarComunicacao();
 
-        doNothing().when(this.repository).deleteById(id);
+        when(this.repository.findById(comunicacao.getId())).thenReturn(Optional.of(comunicacao));
+        doNothing().when(this.repository).delete(comunicacao);
 
-        this.service.deleteById(id);
+        this.service.deleteById(comunicacao.getId());
 
-        verify(this.repository).deleteById(id);
+        verify(this.repository).findById(comunicacao.getId());
+        verify(this.repository).delete(comunicacao);
         verifyNoMoreInteractions(this.repository);
     }
 }
