@@ -4,10 +4,13 @@ Plataforma de comunicação com agendamento de mensagens. Back-end do projeto fe
 
 ### Scripts para que o banco postgresql execute da maneira esperada ao executar o back-end da applicação
 
-CREATE DATABASE comunicacao_db;
-CREATE USER comunicacao WITH ENCRYPTED PASSWORD 'comunicacao';
-GRANT ALL PRIVILEGES ON DATABASE comunicacao_db TO comunicacao;
-CREATE SCHEMA IF NOT EXISTS comunicacao AUTHORIZATION comunicacao;
+* CREATE DATABASE comunicacao_db;
+
+* CREATE USER comunicacao WITH ENCRYPTED PASSWORD 'comunicacao';
+
+* GRANT ALL PRIVILEGES ON DATABASE comunicacao_db TO comunicacao;
+
+* CREATE SCHEMA IF NOT EXISTS comunicacao AUTHORIZATION comunicacao;
 
 ### Para fazer as requisições ao back-end utilizando uma aplicação como o Postman:
 
