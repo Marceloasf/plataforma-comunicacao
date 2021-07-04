@@ -4,7 +4,9 @@ Plataforma de comunicação com agendamento de mensagens. API feita com Java 11 
 
 ### Scripts para que o banco PostgreSQL
 
-É necessário executar esses scripts em um ambiente que execute os comandos nativamente (por ex.: pgAdmin 4), para que o back-end se conecte com o banco e o liquibase execute os changesets requeridos da maneira esperada. 
+É necessário executar esses comandos em um ambiente que execute-os nativamente (por ex.: pgAdmin 4), para que o back-end se conecte com o banco e o liquibase execute os changesets requeridos da maneira esperada. 
+
+> **Nota sobre o server do banco de dados:** Esses comandos devem ser executados em um server que esteja com o **Host name/adress** igual a **localhost** e **Port** igual a **5432**, assim como definidos na property `url: jdbc:postgresql://localhost:5432/comunicacao_db` no arquivo application.yml do back-end.
 
 1. CREATE DATABASE comunicacao_db;
 2. CREATE USER comunicacao WITH ENCRYPTED PASSWORD 'comunicacao';
