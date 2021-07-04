@@ -2,7 +2,7 @@
 
 Plataforma de comunicação com agendamento de mensagens. API feita com Java 11 e Spring Framework.
 
-### Scripts para que o banco PostgreSQL
+### Comandos PostgreSQL para executar a aplicação
 
 É necessário executar esses comandos em um ambiente que execute-os nativamente (por ex.: pgAdmin 4), para que o back-end se conecte com o banco e o liquibase execute os changesets requeridos da maneira esperada. 
 
