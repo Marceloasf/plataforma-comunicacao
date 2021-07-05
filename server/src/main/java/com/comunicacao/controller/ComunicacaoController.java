@@ -24,11 +24,9 @@ public class ComunicacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveComunicacao(@RequestBody Comunicacao novaComunicacao) {
+    public ResponseEntity<Long> saveComunicacao(@RequestBody Comunicacao novaComunicacao) {
 
-        this.service.saveComunicacao(novaComunicacao);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.saveComunicacao(novaComunicacao));
     }
 
     @GetMapping("/{id}/status")

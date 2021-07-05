@@ -25,11 +25,11 @@ public class ComunicacaoService {
         return this.repository.findById(id).orElseThrow(RegistroNaoEncontradoException::new);
     }
 
-    public void saveComunicacao(Comunicacao novaComunicacao) {
+    public Long saveComunicacao(Comunicacao novaComunicacao) {
 
         validator.validarNovoRegistro(novaComunicacao);
 
-        this.repository.save(novaComunicacao);
+        return this.repository.save(novaComunicacao).getId();
     }
 
     @Transactional(readOnly = true)
